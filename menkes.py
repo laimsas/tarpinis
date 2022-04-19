@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, cre
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
-engine = create_engine('sqlite:///bankas_db.db')
+engine = create_engine('sqlite:///menkes_db.db')
 Base = declarative_base()
 
 class Ship(Base):
@@ -15,7 +15,7 @@ class Ship(Base):
     passanger_count = Column("Keleivių skaičius", String)
     trip_price = Column("Kelionės kaina", Float)
     description = Column("Aprašymas", String)
-    # saskaitos = relationship('Saskaita', back_populates = 'bankas')
+    captains = relationship("Captain", back_populates = "ships")
 
     def __repr__(self):  
         return f"{self.name} {self.address} {self.prod_year} {self.passanger_count} {self.trip_price} {self.description}"
@@ -27,6 +27,10 @@ class Captain(Base):
     l_name = Column(String)
     experience = Column(Integer)
     description = Column(String)
+    ship_id = Column(Integer, ForeignKey('ships.id'))
+    ships = relationship("Ship", back_populates = "captains")
+
+
 
     def __repr__(self):  
         return f"{self.f_name} {self.l_name} {self.experience} {self.description}"
@@ -46,9 +50,24 @@ class Klientas(Base):
 class Region(Base):
     __tablename__ = 'regions'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    baltic_sea = Column('Baltijos jūra', bool)
-    curonian_lagoon = Column('Kuršių marios', bool)
-    nemunas = Column('Nemunas', bool)
+    baltic_sea = Column('Baltijos jūra', Integer)
+    curonian_lagoon = Column('Kuršių marios', Integer)
+    nemunas = Column('Nemunas', Integer)
+    ship_id = Column(Integer, ForeignKey('ships.id'))
 
     def __repr__(self):  
         return f"{self.baltic_sea} {self.curonian_lagoon} {self.nemunas}"
+
+class Fish(Base):
+    __tablename__ = 'fishes'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    cod = Column('Menkės', Integer)
+    salomon = Column('Lašišos', Integer)
+    sea_trout = Column('Šlakiai', Integer)
+    zander = Column('Starkiai', Integer)
+    smelt = Column('Stintos', Integer)
+    white_fish = Column('Balta žuvis', Integer)
+    ship_id = Column(Integer, ForeignKey('ships.id'))
+
+
+Base.metadata.create_all(engine)
