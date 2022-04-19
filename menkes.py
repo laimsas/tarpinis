@@ -15,7 +15,7 @@ class Ship(Base):
     passanger_count = Column("Keleivių skaičius", String)
     trip_price = Column("Kelionės kaina", Float)
     description = Column("Aprašymas", String)
-    captains = relationship("Captain", back_populates = "ships")
+    captains = relationship("Captain", back_populates = "ship")
 
     def __repr__(self):  
         return f"{self.name} {self.address} {self.prod_year} {self.passanger_count} {self.trip_price} {self.description}"
@@ -28,7 +28,7 @@ class Captain(Base):
     experience = Column(Integer)
     description = Column(String)
     ship_id = Column(Integer, ForeignKey('ships.id'))
-    ships = relationship("Ship", back_populates = "captains")
+    ship = relationship("Ship", back_populates = "captains")
 
 
 
