@@ -50,20 +50,23 @@ class Klientas(Base):
 class Region(Base):
     __tablename__ = 'regions'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    region_name = Column(String)
-    region_description = Column(String)
-    region_select = Column(Integer)
+    baltic_sea = Column('Baltijos jūra', Integer)
+    curonian_lagoon = Column('Kuršių marios', Integer)
+    nemunas = Column('Nemunas', Integer)
     ship_id = Column(Integer, ForeignKey('ships.id'))
 
     def __repr__(self):  
-        return f"{self.region_name} {self.region_description}"
+        return f"{self.baltic_sea} {self.curonian_lagoon} {self.nemunas}"
 
 class Fish(Base):
     __tablename__ = 'fishes'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    fish_name = Column(String)
-    fish_description = Column(String)
-    fish_select = Column(Integer)
+    cod = Column('Menkės', Integer)
+    salomon = Column('Lašišos', Integer)
+    sea_trout = Column('Šlakiai', Integer)
+    zander = Column('Starkiai', Integer)
+    smelt = Column('Stintos', Integer)
+    white_fish = Column('Balta žuvis', Integer)
     ship_id = Column(Integer, ForeignKey('ships.id'))
 
 
