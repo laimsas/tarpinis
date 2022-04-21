@@ -16,6 +16,7 @@ class Ship(Base):
     trip_price = Column("Kelionės kaina", Float)
     description = Column("Aprašymas", String)
     captains = relationship("Captain", back_populates = "ship")
+    
 
     def __repr__(self):  
         return f"{self.name} {self.address} {self.prod_year} {self.passanger_count} {self.trip_price} {self.description}"
